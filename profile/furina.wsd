@@ -1,0 +1,63 @@
+@startuml
+
+class User {
+  - id: int
+  - name: string
+  - password: string
+  - preferences: Tag[]
+  + register(): void
+  + login(): void
+  + logout(): void
+  + createNote(): void
+  + deleteNote(): void
+  + likeNote(): void
+  + commentOnNote(): void
+}
+
+class Note {
+  - id: int
+  - content: string
+  - createdAt: datetime
+  - createdBy: User
+  - tags: Tag[]
+  - likes: User[]
+  + editContent(): void
+  + delete(): void
+  + like(): void
+  + comment(): void
+}
+
+class Comment {
+  - id: int
+  - content: string
+  - createdAt: datetime
+  - createdBy: User
+  - note: Note
+  + editContent(): void
+  + delete(): void
+}
+
+class Collect {
+  - id: int
+  - name: string
+  - notes: Note[]
+  - createdBy: User
+  + addNote(): void
+  + removeNote(): void
+}
+
+class Tag {
+  - id: int
+  - name: string
+}
+
+User "1" --> "*" Note
+Note "1" --> "*" Comment
+User --> User : Friends
+User "1" --> "*" Collect
+Collect "1" --> "*" Note
+Note "1" --> "*" Tag
+Tag "1" --> "*" Note
+User "1" --> "*" Tag
+
+@enduml
